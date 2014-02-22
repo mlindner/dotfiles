@@ -36,24 +36,24 @@ setlocal indentkeys+==endinterface,=endgroup,=endprogram,=endproperty
 setlocal indentkeys+==`else,=`endif
 
 " Only define the function once.
-if exists("*GetVerilog_SystemVerilogIndent")
-  finish
-endif
+" if exists("*GetVerilog_SystemVerilogIndent")
+"   finish
+" endif
 
 set cpo-=C
 
-function GetVerilog_SystemVerilogIndent()
+function! GetVerilog_SystemVerilogIndent()
 
   if exists('b:verilog_indent_width')
     let offset = b:verilog_indent_width
   else
     let offset = &sw
   endif
-  if exists('b:verilog_indent_modules')
+"  if exists('b:verilog_indent_modules')
     let indent_modules = offset
-  else
-    let indent_modules = 0
-  endif
+"  else
+"    let indent_modules = 0
+"  endif
 
   " Find a non-blank line above the current line.
   let lnum = prevnonblank(v:lnum - 1)
@@ -81,6 +81,7 @@ function GetVerilog_SystemVerilogIndent()
   else
     let vverb = 0
   endif
+  let vverb = 1
 
   " Indent accoding to last line
   " End of multiple-line comment
@@ -91,10 +92,10 @@ function GetVerilog_SystemVerilogIndent()
     endif
 
   " Indent after if/else/for/case/always/initial/specify/fork blocks
-  elseif last_line =~ '`\@<!\<\(if\|else\)\>' ||
-    \ last_line =~ '^\s*\<\(for\|case\%[[zx]]\|do\|foreach\|randcase\)\>' ||
+  elseif last_line !~'^\s*//'  && ( last_line =~ '`\@<!\<\(if\|else\)\>' ||
+    \ last_line =~ '^\s*\<\(for\|while\|case\%[[zx]]\|do\|foreach\|randcase\)\>' ||
     \ last_line =~ '^\s*\<\(always\|always_comb\|always_ff\|always_latch\)\>' ||
-    \ last_line =~ '^\s*\<\(initial\|specify\|fork\|final\)\>'
+    \ last_line =~ '^\s*\<\(initial\|specify\|fork\|final\)\>')
     if last_line !~ '\(;\|\<end\>\)\s*' . vlog_comment . '*$' ||
       \ last_line =~ '\(//\|/\*\).*\(;\|\<end\>\)\s*' . vlog_comment . '*$'
       let ind = ind + offset
@@ -102,7 +103,7 @@ function GetVerilog_SystemVerilogIndent()
     endif
   " Indent after function/task/class/package/sequence/clocking/
   " interface/covergroup/property/program blocks
-  elseif last_line =~ '^\s*\<\(function\|task\|class\|package\)\>' ||
+  elseif last_line =~ '^\s*\(virtual\s\)\?\<\(function\|task\|class\|package\)\>' ||
     \ last_line =~ '^\s*\<\(sequence\|clocking\|interface\)\>' ||
     \ last_line =~ '^\s*\(\w\+\s*:\)\=\s*\<covergroup\>' ||
     \ last_line =~ '^\s*\<\(property\|program\)\>'
@@ -145,16 +146,16 @@ function GetVerilog_SystemVerilogIndent()
     if vverb | echo vverb_str "Indent after begin statement." | endif
 
   " De-indent for the end of one-line block
+  " elseif ( last_line !~ '\<begin\>' ||
+    " \ last_line =~ '\(//\|/\*\).*\<begin\>' )
+    " &&
   elseif ( last_line !~ '\<begin\>' ||
-    \ last_line =~ '\(//\|/\*\).*\<begin\>' ) &&
-    \ last_line2 =~ '\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>.*' .
-      \ vlog_comment . '*$' &&
-    \ last_line2 !~
-      \
-    '\(//\|/\*\).*\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>' &&
-    \ last_line2 !~ vlog_openstat . '\s*' . vlog_comment . '*$' &&
-    \ ( last_line2 !~ '\<begin\>' ||
-    \ last_line2 =~ '\(//\|/\*\).*\<begin\>' )
+    \ last_line =~ '\(//\|/\*\).*\<begin\>' ) 
+    \ && last_line2 =~ '\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>.*' . vlog_comment . '*$' 
+    \ &&   last_line2 !~ '\(//\|/\*\).*\<\(`\@<!if\|`\@<!else\|for\|always\|initial\|do\|foreach\|final\)\>' 
+    \ && last_line2 !~ vlog_openstat . '\s*' . vlog_comment . '*$' 
+    \ &&  ( last_line2 !~ '\<begin\>' ||
+     \ last_line2 =~ '\(//\|/\*\).*\<begin\>' )
     let ind = ind - offset
     if vverb
       echo vverb_str "De-indent after the end of one-line statement."
@@ -194,7 +195,7 @@ function GetVerilog_SystemVerilogIndent()
 
   " De-indent on the end of the block
   " join/end/endcase/endfunction/endtask/endspecify
-  if curr_line =~ '^\s*\<\(join\|join_any\|join_none\|\|end\|endcase\|while\)\>' ||
+  if curr_line =~ '^\s*\<\(join\|join_any\|join_none\|\|end\|endcase\)\>' ||
       \ curr_line =~ '^\s*\<\(endfunction\|endtask\|endspecify\|endclass\)\>' ||
       \ curr_line =~ '^\s*\<\(endpackage\|endsequence\|endclocking\|endinterface\)\>' ||
       \ curr_line =~ '^\s*\<\(endgroup\|endproperty\|endprogram\)\>' ||
