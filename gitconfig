@@ -1,6 +1,6 @@
 [user]
 	name = "Matthew Lindner"
-	email = "mlindner@umich.edu"
+	email = "mattlindn@gmail.com"
 [alias]
 	l = "!. ~/.githelpers && pretty_get_log"
 	co = checkout
