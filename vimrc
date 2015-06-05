@@ -99,3 +99,6 @@ endif
 
 nnoremap <CR> :noh<CR><CR>
 
+autocmd FileType python nnoremap <buffer> <F9> :exec '!python3' shellescape(@%, 1)<cr>
+
+set clipboard=unnamed
