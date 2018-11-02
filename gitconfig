@@ -1,25 +1,36 @@
 [user]
-	name = "Matthew Lindner"
-	email = "mattlindn@gmail.com"
-[alias]
-	l = "!. ~/.githelpers && pretty_get_log"
-	co = checkout
-	ci = commit
-	rb = rebase
-        st = status
-        br = branch
-        df = diff
-        lg = log -p
-        graph = log --graph --oneline --all
+	name = Matthew Lindner
+	email = mattlindn@gmail.com
 [color]
-	ui = true
-        branch = auto
-        diff = auto
-        interactive = auto
-        status = auto
+	branch = auto
+	diff = auto
+	status = auto
+[color "branch"]
+	local = yellow
+	current = yellow reverse
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
 [core]
-	excludesfile = "~/.gitignore"
-	autocrlf = input
-	whitespace = trailing-space,space-before-tab
-[push]
-	default = simple
+	excludesfile = ~/.gitignore-global
+[merge]
+	ff = false
+[pull]
+	ff = only
+[alias]
+	tree = log --oneline --decorate --all --graph
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+	ignore = update-index --skip-worktree
+	unignore = update-index --no-skip-worktree
+	ignored = !git ls-files -v | grep \"^S\"
+	sco = !sh -c \"git branch -a | grep -v remotes | grep $1 | head -1 | xargs git checkout\"
+[bash]
+	showDirtyState = false
