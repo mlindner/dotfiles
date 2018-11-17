@@ -21,6 +21,7 @@
 	untracked = cyan
 [core]
 	excludesfile = ~/.gitignore-global
+	editor = nvim
 [merge]
 	ff = false
 [pull]
