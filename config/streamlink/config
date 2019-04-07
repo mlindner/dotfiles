@@ -1,0 +1,11 @@
+# Player options
+player=mpv --profile=streamlink -v
+# --demuxer-seekable-cache=no
+player-no-close
+player-passthrough=hls,http,rtmp
+verbose-player
+
+crunchyroll-username=
+crunchyroll-password=
+default-stream=best
+
