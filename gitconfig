@@ -28,10 +28,21 @@
 	ff = only
 [alias]
 	tree = log --oneline --decorate --all --graph
+	onetree = log --oneline --decorate --graph
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
 	ignore = update-index --skip-worktree
 	unignore = update-index --no-skip-worktree
 	ignored = !git ls-files -v | grep \"^S\"
 	sco = !sh -c \"git branch -a | grep -v remotes | grep $1 | head -1 | xargs git checkout\"
+	sp = stash pop --index
+	pb = "!f() {     git fetch origin $1:$1; }; f"
+	pf = push --force-with-lease
+	fp = push --force-with-lease
+	alias = !f() { git config --global alias.$@ }
+	co = checkout
+	ca = commit --amend --no-edit
+	dc = diff --staged
 [bash]
 	showDirtyState = false
+[diff]
+	colorMoved = dimmed-zebra

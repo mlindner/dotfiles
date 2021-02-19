@@ -5,6 +5,9 @@ Plug 'vim-airline/vim-airline' " Better bottom bar
 Plug 'mhinz/vim-signify'       " Version control
 Plug 'w0rp/ale'                " Linter
 Plug 'luochen1990/rainbow'     " Rainbow parens
+Plug 'preservim/nerdtree'
+Plug 'wincent/command-t'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 " Enable rainbow parens
@@ -39,6 +42,7 @@ set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " tabs are space
 set autoindent
 "set copyindent      " copy indent from the previous line
+filetype plugin indent on
 
 " Line numbers
 set number
@@ -55,3 +59,4 @@ autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
 set exrc
 set secure
 
+set shortmess+=S
