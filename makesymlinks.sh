@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="gitconfig gitignore_global config/nvim/init.vim config/streamlink/config mpv/config"    # list of files/folders to symlink in homedir
+files="gitconfig gitignore_global config/fish config/nvim/init.vim config/streamlink/config mpv/config"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -32,5 +32,6 @@ for file in $files; do
         mkdir -p ~/dotfiles_old/`dirname $file`
 	mv ~/.$file ~/dotfiles_old/$file
 	echo "Creating symlink to $file in home directory."
+	mkdir -p ~/.${file%/*}
 	ln -s $dir/$file ~/.$file
 done
