@@ -9,6 +9,7 @@ osd-fractions=yes
 
 screenshot-format=png
 screenshot-png-compression=9
+volume-max=200
 
 #window-scale=0.5
 
@@ -33,6 +34,9 @@ vf=format=colorlevels=full
 
 [surround]
 af-add=lavcac3enc
+
+[jointstereo]
+af=pan="stereo|FL<FL+FR|FR<FL-FR"
 
 [tsuki]
 vf=lavfi=[colorlevels=rimin=0.116:gimin=0.116:bimin=0.116:rimax=0.923:gimax=0.923:bimax=0.923]

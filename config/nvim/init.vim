@@ -60,3 +60,7 @@ set exrc
 set secure
 
 set shortmess+=S
+
+
+" NERDTree hotkey
+nmap <C-n> :NERDTreeToggle<CR>

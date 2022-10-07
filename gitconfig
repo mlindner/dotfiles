@@ -46,3 +46,5 @@
 	showDirtyState = false
 [diff]
 	colorMoved = dimmed-zebra
+[init]
+	defaultBranch = master
