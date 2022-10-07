@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="gitconfig gitignore_global config/fish config/nvim/init.vim config/streamlink/config mpv/config"    # list of files/folders to symlink in homedir
+files="gitconfig gitignore_global config/fish config/nvim/init.vim config/streamlink/config mpv/config mpv/input.conf"    # list of files/folders to symlink in homedir
 
 ##########
 
